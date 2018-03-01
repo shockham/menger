@@ -31,7 +31,7 @@ view t =
             vertexShader
             fragmentShader
             mesh
-            { perspective = perspective, time = t }
+            { perspective = perspective, time = t / 1000 }
         ]
 
 
