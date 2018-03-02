@@ -10,14 +10,32 @@ import Meshes exposing (Vertex, mesh)
 import Shaders exposing (Uniforms, vertexShader, fragmentShader)
 
 
-main : Program Never Time Time
+main : Program Never Model Msg
 main =
     Html.program
-        { init = ( 0, Cmd.none )
+        { init = init
         , view = view
         , subscriptions = (\model -> AnimationFrame.diffs Basics.identity)
-        , update = (\elapsed currentTime -> ( elapsed + currentTime, Cmd.none ))
+        , update = update
         }
+
+
+init : ( Model, Cmd Msg )
+init =
+    ( 0, Cmd.none )
+
+
+type alias Model =
+    Time
+
+
+type alias Msg =
+    Time
+
+
+update : Time -> Model -> ( Model, Cmd Msg )
+update elapsed currentTime =
+    ( elapsed + currentTime, Cmd.none )
 
 
 view : Float -> Html msg
