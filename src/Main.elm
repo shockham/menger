@@ -22,11 +22,11 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( 0, Cmd.none )
+    ( Model 0, Cmd.none )
 
 
 type alias Model =
-    Time
+    { time : Time }
 
 
 type Msg
@@ -37,7 +37,7 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Frame t ->
-            ( t + model, Cmd.none )
+            { model | time = model.time + t } ! []
 
 
 subscriptions : Model -> Sub Msg
@@ -46,7 +46,7 @@ subscriptions model =
 
 
 view : Model -> Html msg
-view t =
+view model =
     WebGL.toHtml
         [ width 600
         , height 600
@@ -56,7 +56,7 @@ view t =
             vertexShader
             fragmentShader
             mesh
-            { perspective = perspective, time = t / 1000 }
+            { perspective = perspective, time = model.time / 1000 }
         ]
 
 
