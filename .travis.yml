@@ -37,4 +37,4 @@ install:
   - npm install -g elm-test
 
 script:
-  - elm make --yes && elm-test
+  - elm make src/*.elm --output=build/js/main.js
