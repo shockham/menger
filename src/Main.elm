@@ -61,7 +61,7 @@ viewCanvas model =
         [ width 600
         , height 600
         , style
-            [ ( "display", "block" )
+            [ ( "display", "inline-block" )
             , ( "width", "50%" )
             ]
         ]
@@ -78,7 +78,7 @@ viewCanvas model =
 
 viewControls : Model -> Html msg
 viewControls model =
-    div []
+    div [ style [ ( "display", "inline-block" ) ] ]
         [ input
             [ type_ "range"
             , A.min "1"
