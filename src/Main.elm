@@ -62,7 +62,10 @@ viewCanvas model =
             vertexShader
             fragmentShader
             mesh
-            { perspective = perspective, time = model.time / 1000 }
+            { perspective = perspective
+            , time = model.time / 1000
+            , iterations = 4
+            }
         ]
 
 

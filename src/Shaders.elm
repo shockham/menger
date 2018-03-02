@@ -9,6 +9,7 @@ import Meshes exposing (Vertex)
 type alias Uniforms =
     { perspective : Mat4
     , time : Float
+    , iterations : Int
     }
 
 
@@ -40,30 +41,34 @@ fragmentShader =
         const float MIN_DIST = 0.0;
         const float MAX_DIST = 100.0;
         const float EPSILON = 0.0001;
+        const int MAX_ITERS = 8;
 
         uniform float time;
+        uniform int iterations;
 
         varying vec3 vposition;
         varying vec3 vcolor;
 
         float iter_box(vec3 p, float init_d) {
-           float d = init_d;
+            float d = init_d;
 
-           float s = 1.0;
-           for(int m=0; m<4; m++) {
-              vec3 a = mod( p*s, 2.0 )-1.0;
-              s *= 3.0;
-              vec3 r = abs(1.0 - 3.0*abs(a));
+            float s = 1.0;
+            for(int m=0; m<MAX_ITERS; m++) {
+                if(m>iterations) return d;
 
-              float da = max(r.x,r.y);
-              float db = max(r.y,r.z);
-              float dc = max(r.z,r.x);
-              float c = (min(da,min(db,dc))-1.0)/s;
+                vec3 a = mod( p*s, 2.0 )-1.0;
+                s *= 3.0;
+                vec3 r = abs(1.0 - 3.0*abs(a));
 
-              d = max(d,c);
-           }
+                float da = max(r.x,r.y);
+                float db = max(r.y,r.z);
+                float dc = max(r.z,r.x);
+                float c = (min(da,min(db,dc))-1.0)/s;
 
-           return d;
+                d = max(d,c);
+            }
+
+            return d;
         }
 
         float sphere(vec3 p, float s) {
