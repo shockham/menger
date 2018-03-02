@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import AnimationFrame
 import Html exposing (..)
-import Html.Attributes exposing (width, height, style)
+import Html.Attributes as A exposing (..)
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Time exposing (Time)
 import WebGL exposing (Mesh, Shader)
@@ -22,11 +22,13 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model 0, Cmd.none )
+    ( Model 0 1, Cmd.none )
 
 
 type alias Model =
-    { time : Time }
+    { time : Time
+    , iterations : Int
+    }
 
 
 type Msg
@@ -48,7 +50,9 @@ subscriptions model =
 view : Model -> Html msg
 view model =
     div []
-        [ viewCanvas model ]
+        [ viewCanvas model
+        , viewControls model
+        ]
 
 
 viewCanvas : Model -> Html msg
@@ -56,7 +60,10 @@ viewCanvas model =
     WebGL.toHtml
         [ width 600
         , height 600
-        , style [ ( "display", "block" ), ( "width", "50%" ) ]
+        , style
+            [ ( "display", "block" )
+            , ( "width", "50%" )
+            ]
         ]
         [ WebGL.entity
             vertexShader
@@ -64,8 +71,22 @@ viewCanvas model =
             mesh
             { perspective = perspective
             , time = model.time / 1000
-            , iterations = 4
+            , iterations = 2
             }
+        ]
+
+
+viewControls : Model -> Html msg
+viewControls model =
+    div []
+        [ input
+            [ type_ "range"
+            , A.min "1"
+            , A.max "8"
+            , A.step "1"
+            , value (toString model.iterations)
+            ]
+            []
         ]
 
 
