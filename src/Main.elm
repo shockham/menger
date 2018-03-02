@@ -23,18 +23,20 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model 0 1, Cmd.none )
+    ( Model 0 1 1, Cmd.none )
 
 
 type alias Model =
     { time : Time
     , iterations : Int
+    , distance : Float
     }
 
 
 type Msg
     = Frame Time
     | IterationsInput String
+    | DistanceInput String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -45,6 +47,9 @@ update msg model =
 
         IterationsInput val ->
             { model | iterations = Result.withDefault 1 (String.toInt val) } ! []
+
+        DistanceInput val ->
+            { model | distance = Result.withDefault 1 (String.toFloat val) } ! []
 
 
 subscriptions : Model -> Sub Msg
@@ -77,14 +82,22 @@ viewCanvas model =
             { perspective = perspective
             , time = model.time / 1000
             , iterations = model.iterations
+            , distance = model.distance
             }
         ]
+
+
+perspective : Mat4
+perspective =
+    Mat4.makeOrtho2D 0 1 0 1
 
 
 viewControls : Model -> Html Msg
 viewControls model =
     div [ style [ ( "display", "inline-block" ) ] ]
-        [ viewIterControl model ]
+        [ viewIterControl model
+        , viewDistControl model
+        ]
 
 
 viewIterControl : Model -> Html Msg
@@ -103,6 +116,16 @@ viewIterControl model =
         ]
 
 
-perspective : Mat4
-perspective =
-    Mat4.makeOrtho2D 0 1 0 1
+viewDistControl : Model -> Html Msg
+viewDistControl model =
+    div []
+        [ text "DIST:"
+        , input
+            [ type_ "range"
+            , A.min "1"
+            , A.max "20"
+            , value (toString model.distance)
+            , onInput DistanceInput
+            ]
+            []
+        ]

@@ -10,6 +10,7 @@ type alias Uniforms =
     { perspective : Mat4
     , time : Float
     , iterations : Int
+    , distance : Float
     }
 
 
@@ -45,6 +46,7 @@ fragmentShader =
 
         uniform float time;
         uniform int iterations;
+        uniform float distance;
 
         varying vec3 vposition;
         varying vec3 vcolor;
@@ -191,7 +193,7 @@ fragmentShader =
         void main() {
             vec2 resolution = vec2(400);
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
-            vec3 cam_pos = vec3(0.0, 0.0, 5.0);
+            vec3 cam_pos = vec3(0.0, 0.0, distance);
 
             float dist = shortest_dist(cam_pos, dir, MIN_DIST, MAX_DIST);
 
