@@ -46,9 +46,9 @@ subscriptions model =
 view : Model -> Html msg
 view t =
     WebGL.toHtml
-        [ width 400
-        , height 400
-        , style [ ( "display", "block" ) ]
+        [ width 600
+        , height 600
+        , style [ ( "display", "block" ), ( "width", "50%" ) ]
         ]
         [ WebGL.entity
             vertexShader
