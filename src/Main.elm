@@ -33,7 +33,7 @@ type alias Msg =
     Time
 
 
-update : Time -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> ( Model, Cmd Msg )
 update elapsed currentTime =
     ( elapsed + currentTime, Cmd.none )
 
@@ -43,7 +43,7 @@ subscriptions model =
     AnimationFrame.diffs Basics.identity
 
 
-view : Float -> Html msg
+view : Model -> Html msg
 view t =
     WebGL.toHtml
         [ width 400
