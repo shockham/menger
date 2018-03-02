@@ -1,7 +1,5 @@
 
-DEPLOY_PATH = ../cordova/www
-
-all: build deploy
+all: build
 
 build:
 	elm-make src/*.elm --warn --output=build/js/main.js
