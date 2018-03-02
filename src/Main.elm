@@ -29,18 +29,20 @@ type alias Model =
     Time
 
 
-type alias Msg =
-    Time
+type Msg
+    = Frame Time
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update elapsed currentTime =
-    ( elapsed + currentTime, Cmd.none )
+update msg model =
+    case msg of
+        Frame t ->
+            ( t + model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    AnimationFrame.diffs Basics.identity
+    AnimationFrame.diffs Frame
 
 
 view : Model -> Html msg
