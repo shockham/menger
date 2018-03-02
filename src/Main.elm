@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import AnimationFrame
-import Html exposing (Html)
+import Html exposing (..)
 import Html.Attributes exposing (width, height, style)
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Time exposing (Time)
@@ -47,6 +47,12 @@ subscriptions model =
 
 view : Model -> Html msg
 view model =
+    div []
+        [ viewCanvas model ]
+
+
+viewCanvas : Model -> Html msg
+viewCanvas model =
     WebGL.toHtml
         [ width 600
         , height 600
