@@ -84,7 +84,14 @@ viewCanvas model =
 viewControls : Model -> Html Msg
 viewControls model =
     div [ style [ ( "display", "inline-block" ) ] ]
-        [ input
+        [ viewIterControl model ]
+
+
+viewIterControl : Model -> Html Msg
+viewIterControl model =
+    div []
+        [ text "ITER:"
+        , input
             [ type_ "range"
             , A.min "1"
             , A.max "8"
