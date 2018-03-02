@@ -3,6 +3,7 @@ module Main exposing (main)
 import AnimationFrame
 import Html exposing (..)
 import Html.Attributes as A exposing (..)
+import Html.Events exposing (..)
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Time exposing (Time)
 import WebGL exposing (Mesh, Shader)
@@ -33,6 +34,7 @@ type alias Model =
 
 type Msg
     = Frame Time
+    | IterationsInput String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -41,13 +43,16 @@ update msg model =
         Frame t ->
             { model | time = model.time + t } ! []
 
+        IterationsInput val ->
+            { model | iterations = Result.withDefault 1 (String.toInt val) } ! []
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     AnimationFrame.diffs Frame
 
 
-view : Model -> Html msg
+view : Model -> Html Msg
 view model =
     div []
         [ viewCanvas model
@@ -55,7 +60,7 @@ view model =
         ]
 
 
-viewCanvas : Model -> Html msg
+viewCanvas : Model -> Html Msg
 viewCanvas model =
     WebGL.toHtml
         [ width 600
@@ -71,12 +76,12 @@ viewCanvas model =
             mesh
             { perspective = perspective
             , time = model.time / 1000
-            , iterations = 2
+            , iterations = model.iterations
             }
         ]
 
 
-viewControls : Model -> Html msg
+viewControls : Model -> Html Msg
 viewControls model =
     div [ style [ ( "display", "inline-block" ) ] ]
         [ input
@@ -85,6 +90,7 @@ viewControls model =
             , A.max "8"
             , A.step "1"
             , value (toString model.iterations)
+            , onInput IterationsInput
             ]
             []
         ]
