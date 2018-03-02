@@ -15,7 +15,7 @@ main =
     Html.program
         { init = init
         , view = view
-        , subscriptions = (\model -> AnimationFrame.diffs Basics.identity)
+        , subscriptions = subscriptions
         , update = update
         }
 
@@ -36,6 +36,11 @@ type alias Msg =
 update : Time -> Model -> ( Model, Cmd Msg )
 update elapsed currentTime =
     ( elapsed + currentTime, Cmd.none )
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    AnimationFrame.diffs Basics.identity
 
 
 view : Float -> Html msg
