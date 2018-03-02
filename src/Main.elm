@@ -23,13 +23,14 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model 0 1 1, Cmd.none )
+    ( Model 0 1 1 0.1, Cmd.none )
 
 
 type alias Model =
     { time : Time
     , iterations : Int
     , distance : Float
+    , noise : Float
     }
 
 
@@ -37,6 +38,7 @@ type Msg
     = Frame Time
     | IterationsInput String
     | DistanceInput String
+    | NoiseInput String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -50,6 +52,9 @@ update msg model =
 
         DistanceInput val ->
             { model | distance = Result.withDefault 1 (String.toFloat val) } ! []
+
+        NoiseInput val ->
+            { model | noise = Result.withDefault 0 (String.toFloat val) } ! []
 
 
 subscriptions : Model -> Sub Msg
@@ -83,6 +88,7 @@ viewCanvas model =
             , time = model.time / 1000
             , iterations = model.iterations
             , distance = model.distance
+            , noise = model.noise
             }
         ]
 
@@ -97,6 +103,7 @@ viewControls model =
     div [ style [ ( "display", "inline-block" ) ] ]
         [ viewIterControl model
         , viewDistControl model
+        , viewNoiseControl model
         ]
 
 
@@ -126,6 +133,22 @@ viewDistControl model =
             , A.max "20"
             , value (toString model.distance)
             , onInput DistanceInput
+            ]
+            []
+        ]
+
+
+viewNoiseControl : Model -> Html Msg
+viewNoiseControl model =
+    div []
+        [ text "NOIS:"
+        , input
+            [ type_ "range"
+            , A.min "0"
+            , A.max "1"
+            , A.step "0.05"
+            , value (toString model.noise)
+            , onInput NoiseInput
             ]
             []
         ]

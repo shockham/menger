@@ -11,6 +11,7 @@ type alias Uniforms =
     , time : Float
     , iterations : Int
     , distance : Float
+    , noise : Float
     }
 
 
@@ -47,6 +48,7 @@ fragmentShader =
         uniform float time;
         uniform int iterations;
         uniform float distance;
+        uniform float noise;
 
         varying vec3 vposition;
         varying vec3 vcolor;
@@ -185,7 +187,7 @@ fragmentShader =
                                           light1Intensity);
             color = mix(color,  color * occ * softshadow(p, normalize(light1Pos), 0.02, 5.0), 0.5);
 
-            color = mix(color, vec3(rand(vposition.xy * time)), 0.1);
+            color = mix(color, vec3(rand(vposition.xy * time)), noise);
 
             return color;
         }
