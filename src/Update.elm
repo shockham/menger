@@ -1,4 +1,4 @@
-module Update exposing (Model, Msg(..), update)
+module Update exposing (Model, initModel, Msg(..), update)
 
 import Time exposing (Time)
 
@@ -9,6 +9,11 @@ type alias Model =
     , distance : Float
     , noise : Float
     }
+
+
+initModel : Model
+initModel =
+    Model 0 1 6 0.1
 
 
 type Msg
