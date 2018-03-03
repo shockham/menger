@@ -192,12 +192,27 @@ fragmentShader =
             return color;
         }
 
+        mat4 view_matrix(vec3 eye, vec3 center, vec3 up) {
+            vec3 f = normalize(center - eye);
+            vec3 s = normalize(cross(f, up));
+            vec3 u = cross(s, f);
+            return mat4(
+                vec4(s, 0.0),
+                vec4(u, 0.0),
+                vec4(-f, 0.0),
+                vec4(0.0, 0.0, 0.0, 1)
+            );
+        }
+
         void main() {
             vec2 resolution = vec2(400);
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
-            vec3 cam_pos = vec3(0.0, 0.0, distance);
+            vec3 cam_pos = vec3(0.0, 3.0, distance);
 
-            float dist = shortest_dist(cam_pos, dir, MIN_DIST, MAX_DIST);
+            mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
+            vec3 v_dir = (view_mat * vec4(dir, 0.0)).xyz;
+
+            float dist = shortest_dist(cam_pos, v_dir, MIN_DIST, MAX_DIST);
 
             if (dist > MAX_DIST - EPSILON) {
                 // Didn't hit anything
@@ -206,7 +221,7 @@ fragmentShader =
             }
 
             // The closest point on the surface to the eyepoint along the view ray
-            vec3 p = cam_pos + dist * dir;
+            vec3 p = cam_pos + dist * v_dir;
 
             vec3 K_a = vec3(0.2, 0.2, 0.2);
             vec3 K_d = vec3(0.2, 0.2, 0.2);
