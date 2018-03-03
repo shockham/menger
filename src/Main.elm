@@ -18,7 +18,7 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model 0 1 1 0.1, Cmd.none )
+    ( Model 0 1 6 0.1, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
