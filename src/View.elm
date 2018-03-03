@@ -60,19 +60,24 @@ viewControlLabel t =
     span [ style [ ( "vertical-align", "top" ) ] ] [ text t ]
 
 
+viewRangeInput : String -> String -> String -> number -> (String -> Msg) -> Html Msg
+viewRangeInput mn mx st val msg =
+    input
+        [ type_ "range"
+        , A.min mn
+        , A.max mx
+        , A.step st
+        , value (toString val)
+        , onInput msg
+        ]
+        []
+
+
 viewIterControl : Model -> Html Msg
 viewIterControl model =
     div []
         [ viewControlLabel "ITER "
-        , input
-            [ type_ "range"
-            , A.min "1"
-            , A.max "8"
-            , A.step "1"
-            , value (toString model.iterations)
-            , onInput IterationsInput
-            ]
-            []
+        , viewRangeInput "1" "8" "1" model.iterations IterationsInput
         ]
 
 
@@ -80,14 +85,7 @@ viewDistControl : Model -> Html Msg
 viewDistControl model =
     div []
         [ viewControlLabel "DIST "
-        , input
-            [ type_ "range"
-            , A.min "1"
-            , A.max "20"
-            , value (toString model.distance)
-            , onInput DistanceInput
-            ]
-            []
+        , viewRangeInput "1" "20" "0.2" model.distance DistanceInput
         ]
 
 
@@ -95,13 +93,5 @@ viewNoiseControl : Model -> Html Msg
 viewNoiseControl model =
     div []
         [ viewControlLabel "NOIS "
-        , input
-            [ type_ "range"
-            , A.min "0"
-            , A.max "1"
-            , A.step "0.05"
-            , value (toString model.noise)
-            , onInput NoiseInput
-            ]
-            []
+        , viewRangeInput "0" "1" "0.05" model.noise NoiseInput
         ]
