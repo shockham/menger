@@ -48,7 +48,12 @@ perspective =
 
 viewControls : Model -> Html Msg
 viewControls model =
-    div [ style [ ( "display", "inline-block" ) ] ]
+    div
+        [ style
+            [ ( "display", "inline-block" )
+            , ( "vertical-align", "top" )
+            ]
+        ]
         [ viewIterControl model
         , viewDistControl model
         , viewNoiseControl model
