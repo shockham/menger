@@ -55,10 +55,15 @@ viewControls model =
         ]
 
 
+viewControlLabel : String -> Html Msg
+viewControlLabel t =
+    span [ style [ ( "vertical-align", "top" ) ] ] [ text t ]
+
+
 viewIterControl : Model -> Html Msg
 viewIterControl model =
     div []
-        [ text "ITER:"
+        [ viewControlLabel "ITER "
         , input
             [ type_ "range"
             , A.min "1"
@@ -74,7 +79,7 @@ viewIterControl model =
 viewDistControl : Model -> Html Msg
 viewDistControl model =
     div []
-        [ text "DIST:"
+        [ viewControlLabel "DIST "
         , input
             [ type_ "range"
             , A.min "1"
@@ -89,7 +94,7 @@ viewDistControl model =
 viewNoiseControl : Model -> Html Msg
 viewNoiseControl model =
     div []
-        [ text "NOIS:"
+        [ viewControlLabel "NOIS "
         , input
             [ type_ "range"
             , A.min "0"
