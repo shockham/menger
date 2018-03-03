@@ -52,6 +52,8 @@ viewControls model =
         [ style
             [ ( "display", "inline-block" )
             , ( "vertical-align", "top" )
+            , ( "width", "50%" )
+            , ( "text-align", "center" )
             ]
         ]
         [ viewIterControl model
