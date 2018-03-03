@@ -1,7 +1,7 @@
 module Main exposing (main)
 
 import AnimationFrame
-import Update exposing (..)
+import Update exposing (Model, Msg(Frame), update)
 import View exposing (view)
 import Html exposing (program)
 
