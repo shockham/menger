@@ -26,6 +26,7 @@ viewCanvas model =
         , style
             [ ( "display", "inline-block" )
             , ( "width", "50%" )
+            , ( "cursor", "move" )
             ]
         ]
         [ WebGL.entity
