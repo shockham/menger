@@ -207,7 +207,11 @@ fragmentShader =
         void main() {
             vec2 resolution = vec2(400);
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
-            vec3 cam_pos = vec3(distance * cos(time), 5.0, distance * sin(time));
+            vec3 cam_pos = vec3(
+                distance * cos(time),
+                distance * sin(time) * cos(time),
+                distance * sin(time)
+            );
 
             mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
             vec3 v_dir = (view_mat * vec4(dir, 0.0)).xyz;
