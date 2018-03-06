@@ -13,6 +13,8 @@ type alias Uniforms =
     , iterations : Int
     , distance : Float
     , noise : Float
+    , displ : Float
+    , rota : Float
     , mouse_pos : Vec2
     }
 
@@ -53,6 +55,8 @@ fragmentShader =
         uniform int iterations;
         uniform float distance;
         uniform float noise;
+        uniform float displ;
+        uniform float rota;
         uniform vec2 mouse_pos;
 
         varying vec3 vposition;
@@ -84,12 +88,32 @@ fragmentShader =
             return length(p) - s;
         }
 
+        float box(vec3 p, vec3 b) {
+            vec3 d = abs(p) - b;
+            return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));
+        }
+
         float disp(vec3 p, float amt) {
             return sin(amt*p.x)*sin(amt*p.y)*sin(amt*p.z);
         }
 
+        mat4 rotateY(float theta) {
+            float c = cos(theta);
+            float s = sin(theta);
+
+            return mat4(
+                vec4(c, 0, s, 0),
+                vec4(0, 1, 0, 0),
+                vec4(-s, 0, c, 0),
+                vec4(0, 0, 0, 1)
+            );
+        }
+
         float scene(vec3 p) {
-            return iter_box(p, sphere(p, 1.0));
+            return iter_box(
+                p,
+                box((rotateY(rota) * vec4(p, 1.0)).xyz + disp(p, displ), vec3(1.0))
+            );
         }
 
         float shortest_dist(vec3 eye, vec3 marchingDirection, float start, float end) {

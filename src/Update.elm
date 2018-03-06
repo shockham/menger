@@ -9,6 +9,8 @@ type alias Model =
     , iterations : Int
     , distance : Float
     , noise : Float
+    , displ : Float
+    , rota : Float
     , drag : Maybe Drag
     , position : Position
     }
@@ -22,7 +24,7 @@ type alias Drag =
 
 initModel : Model
 initModel =
-    Model 0 1 6 0.1 Nothing (Position 0 0)
+    Model 0 1 6 0.1 0 0 Nothing (Position 0 0)
 
 
 type Msg
@@ -30,6 +32,8 @@ type Msg
     | IterationsInput String
     | DistanceInput String
     | NoiseInput String
+    | DisplInput String
+    | RotaInput String
     | DragStart Position
     | DragAt Position
     | DragEnd Position
@@ -49,6 +53,12 @@ update msg model =
 
         NoiseInput val ->
             { model | noise = Result.withDefault 0 (String.toFloat val) } ! []
+
+        DisplInput val ->
+            { model | displ = Result.withDefault 0 (String.toFloat val) } ! []
+
+        RotaInput val ->
+            { model | rota = Result.withDefault 0 (String.toFloat val) } ! []
 
         DragStart xy ->
             { model | drag = (Just (Drag xy xy)), position = (getPosition model) } ! []

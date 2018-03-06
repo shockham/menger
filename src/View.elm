@@ -42,6 +42,8 @@ viewCanvas model =
             , iterations = model.iterations
             , distance = model.distance
             , noise = model.noise
+            , displ = model.displ
+            , rota = model.rota
             , mouse_pos = (vec2 (toFloat model.position.x) (toFloat model.position.y))
             }
         ]
@@ -65,6 +67,8 @@ viewControls model =
         [ viewIterControl model
         , viewDistControl model
         , viewNoiseControl model
+        , viewDisplControl model
+        , viewRotaControl model
         ]
 
 
@@ -107,4 +111,20 @@ viewNoiseControl model =
     div []
         [ viewControlLabel "NOIS "
         , viewRangeInput "0" "1" "0.05" model.noise NoiseInput
+        ]
+
+
+viewDisplControl : Model -> Html Msg
+viewDisplControl model =
+    div []
+        [ viewControlLabel "DISP "
+        , viewRangeInput "0" "2" "0.05" model.displ DisplInput
+        ]
+
+
+viewRotaControl : Model -> Html Msg
+viewRotaControl model =
+    div []
+        [ viewControlLabel "ROTA "
+        , viewRangeInput "0" "2" "0.05" model.displ RotaInput
         ]
