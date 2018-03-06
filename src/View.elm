@@ -85,7 +85,7 @@ viewIterControl : Model -> Html Msg
 viewIterControl model =
     div []
         [ viewControlLabel "ITER "
-        , viewRangeInput "1" "8" "1" model.iterations IterationsInput
+        , viewRangeInput "0" "8" "1" model.iterations IterationsInput
         ]
 
 
