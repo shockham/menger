@@ -5,10 +5,11 @@ import Html.Attributes as A exposing (..)
 import Html.Events exposing (..)
 import WebGL exposing (Mesh, Shader)
 import Math.Matrix4 as Mat4 exposing (Mat4)
-import Update exposing (Model, Msg(..))
+import Math.Vector2 exposing (vec2)
+import Update exposing (Model, Msg(..), getPosition)
 import Shaders exposing (Uniforms, vertexShader, fragmentShader)
 import Meshes exposing (Vertex, mesh)
-import Mouse exposing (position)
+import Mouse exposing (position, Position)
 import Json.Decode as Decode
 
 
@@ -41,6 +42,7 @@ viewCanvas model =
             , iterations = model.iterations
             , distance = model.distance
             , noise = model.noise
+            , mouse_pos = (vec2 (toFloat model.position.x) (toFloat model.position.y))
             }
         ]
 

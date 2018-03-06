@@ -1,4 +1,4 @@
-module Update exposing (Model, initModel, Msg(..), update)
+module Update exposing (Model, initModel, Msg(..), update, getPosition)
 
 import Time exposing (Time)
 import Mouse exposing (Position)
@@ -10,6 +10,7 @@ type alias Model =
     , distance : Float
     , noise : Float
     , drag : Maybe Drag
+    , position : Position
     }
 
 
@@ -21,7 +22,7 @@ type alias Drag =
 
 initModel : Model
 initModel =
-    Model 0 1 6 0.1 Nothing
+    Model 0 1 6 0.1 Nothing (Position 0 0)
 
 
 type Msg
@@ -50,10 +51,26 @@ update msg model =
             { model | noise = Result.withDefault 0 (String.toFloat val) } ! []
 
         DragStart xy ->
-            { model | drag = (Just (Drag xy xy)) } ! []
+            { model | drag = (Just (Drag xy xy)), position = (getPosition model) } ! []
 
         DragAt xy ->
-            { model | drag = (Maybe.map (\{ start } -> Drag start xy) model.drag) } ! []
+            { model
+                | drag = (Maybe.map (\{ start } -> Drag start xy) model.drag)
+                , position = (getPosition model)
+            }
+                ! []
 
         DragEnd _ ->
-            { model | drag = Nothing } ! []
+            { model | drag = Nothing, position = (getPosition model) } ! []
+
+
+getPosition : Model -> Position
+getPosition { position, drag } =
+    case drag of
+        Nothing ->
+            position
+
+        Just { start, current } ->
+            Position
+                (position.x + current.x - start.x)
+                (position.y + current.y - start.y)

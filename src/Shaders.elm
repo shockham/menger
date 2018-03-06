@@ -2,6 +2,7 @@ module Shaders exposing (Uniforms, vertexShader, fragmentShader)
 
 import Math.Matrix4 as Mat4 exposing (Mat4)
 import Math.Vector3 as Vec3 exposing (vec3, Vec3)
+import Math.Vector2 exposing (Vec2)
 import WebGL exposing (Mesh, Shader)
 import Meshes exposing (Vertex)
 
@@ -12,6 +13,7 @@ type alias Uniforms =
     , iterations : Int
     , distance : Float
     , noise : Float
+    , mouse_pos : Vec2
     }
 
 
@@ -44,11 +46,13 @@ fragmentShader =
         const float MAX_DIST = 100.0;
         const float EPSILON = 0.0001;
         const int MAX_ITERS = 8;
+        const float MOUSE_POS_DIV = 3000.0;
 
         uniform float time;
         uniform int iterations;
         uniform float distance;
         uniform float noise;
+        uniform vec2 mouse_pos;
 
         varying vec3 vposition;
         varying vec3 vcolor;
@@ -208,9 +212,9 @@ fragmentShader =
             vec2 resolution = vec2(400);
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
             vec3 cam_pos = vec3(
-                distance * cos(time),
-                distance * sin(time) * cos(time),
-                distance * sin(time)
+                distance * cos(mouse_pos.x / MOUSE_POS_DIV),
+                distance * sin(mouse_pos.y / MOUSE_POS_DIV),
+                distance * sin(mouse_pos.x / MOUSE_POS_DIV)
             );
 
             mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
