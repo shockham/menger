@@ -1,9 +1,10 @@
 module Main exposing (main)
 
 import AnimationFrame
-import Update exposing (Model, initModel, Msg(Frame), update)
+import Update exposing (Model, initModel, Msg(..), update)
 import View exposing (view)
 import Html exposing (program)
+import Mouse
 
 
 main : Program Never Model Msg
@@ -23,4 +24,13 @@ init =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    AnimationFrame.diffs Frame
+    case model.drag of
+        Nothing ->
+            AnimationFrame.diffs Frame
+
+        Just _ ->
+            Sub.batch
+                [ AnimationFrame.diffs Frame
+                , Mouse.moves DragAt
+                , Mouse.ups DragEnd
+                ]

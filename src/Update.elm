@@ -1,6 +1,7 @@
 module Update exposing (Model, initModel, Msg(..), update)
 
 import Time exposing (Time)
+import Mouse exposing (Position)
 
 
 type alias Model =
@@ -8,12 +9,19 @@ type alias Model =
     , iterations : Int
     , distance : Float
     , noise : Float
+    , drag : Maybe Drag
+    }
+
+
+type alias Drag =
+    { start : Position
+    , current : Position
     }
 
 
 initModel : Model
 initModel =
-    Model 0 1 6 0.1
+    Model 0 1 6 0.1 Nothing
 
 
 type Msg
@@ -21,6 +29,9 @@ type Msg
     | IterationsInput String
     | DistanceInput String
     | NoiseInput String
+    | DragStart Position
+    | DragAt Position
+    | DragEnd Position
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -37,3 +48,12 @@ update msg model =
 
         NoiseInput val ->
             { model | noise = Result.withDefault 0 (String.toFloat val) } ! []
+
+        DragStart xy ->
+            { model | drag = (Just (Drag xy xy)) } ! []
+
+        DragAt xy ->
+            { model | drag = (Maybe.map (\{ start } -> Drag start xy) model.drag) } ! []
+
+        DragEnd _ ->
+            { model | drag = Nothing } ! []

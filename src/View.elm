@@ -8,6 +8,8 @@ import Math.Matrix4 as Mat4 exposing (Mat4)
 import Update exposing (Model, Msg(..))
 import Shaders exposing (Uniforms, vertexShader, fragmentShader)
 import Meshes exposing (Vertex, mesh)
+import Mouse exposing (position)
+import Json.Decode as Decode
 
 
 view : Model -> Html Msg
@@ -28,6 +30,7 @@ viewCanvas model =
             , ( "width", "50%" )
             , ( "cursor", "move" )
             ]
+        , on "mousedown" (Decode.map DragStart Mouse.position)
         ]
         [ WebGL.entity
             vertexShader
