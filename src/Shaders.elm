@@ -47,6 +47,7 @@ fragmentShader =
         const float EPSILON = 0.0001;
         const int MAX_ITERS = 8;
         const float MOUSE_POS_DIV = 3000.0;
+        const float HALF_PI =  1.5707964;
 
         uniform float time;
         uniform int iterations;
@@ -213,7 +214,7 @@ fragmentShader =
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
             vec3 cam_pos = vec3(
                 distance * cos(mouse_pos.x / MOUSE_POS_DIV),
-                distance * sin(mouse_pos.y / MOUSE_POS_DIV),
+                distance * sin(clamp(mouse_pos.y / MOUSE_POS_DIV, -HALF_PI, HALF_PI)),
                 distance * sin(mouse_pos.x / MOUSE_POS_DIV)
             );
 
