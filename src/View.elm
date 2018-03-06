@@ -44,6 +44,7 @@ viewCanvas model =
             , noise = model.noise
             , displ = model.displ
             , rota = model.rota
+            , light = model.light
             , mouse_pos = (vec2 (toFloat model.position.x) (toFloat model.position.y))
             }
         ]
@@ -69,6 +70,7 @@ viewControls model =
         , viewNoiseControl model
         , viewDisplControl model
         , viewRotaControl model
+        , viewLightControl model
         ]
 
 
@@ -127,4 +129,12 @@ viewRotaControl model =
     div []
         [ viewControlLabel "ROTA "
         , viewRangeInput "0" "2" "0.05" model.displ RotaInput
+        ]
+
+
+viewLightControl : Model -> Html Msg
+viewLightControl model =
+    div []
+        [ viewControlLabel "LGHT "
+        , viewRangeInput "0" "1" "0.05" model.light LightInput
         ]

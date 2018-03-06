@@ -15,6 +15,7 @@ type alias Uniforms =
     , noise : Float
     , displ : Float
     , rota : Float
+    , light : Float
     , mouse_pos : Vec2
     }
 
@@ -57,6 +58,7 @@ fragmentShader =
         uniform float noise;
         uniform float displ;
         uniform float rota;
+        uniform float light;
         uniform vec2 mouse_pos;
 
         varying vec3 vposition;
@@ -214,7 +216,11 @@ fragmentShader =
             color += phong_contrib(k_d, k_s, alpha, p, eye,
                                           light1Pos,
                                           light1Intensity);
-            color = mix(color,  color * occ * softshadow(p, normalize(light1Pos), 0.02, 5.0), 0.5);
+            color = mix(
+                color,
+                color * occ * softshadow(p, normalize(light1Pos), 0.02, 5.0),
+                light
+            );
 
             color = mix(color, vec3(rand(vposition.xy * time)), noise);
 
