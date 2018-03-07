@@ -1,9 +1,10 @@
 html { background: #CCCCCC; color: #333333; height: 100%; }
 body { height: 100%; }
 
-.container { height: 100%; }
+.container { height: 100%; overflow: hidden; }
 
-.control-container { display: inline-block; vertical-align: top; text-align: center; }
+.control-container { display: inline-block; vertical-align: top; text-align: center;
+    float: right; }
 .control-label { vertical-align: 40%; line-height: 30px; }
 
 .canvas { display: inline-block; height: 100%; cursor: move; }
