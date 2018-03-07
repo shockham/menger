@@ -15,7 +15,7 @@ import Json.Decode as Decode
 
 view : Model -> Html Msg
 view model =
-    div []
+    div [ class "container" ]
         [ viewCanvas model
         , viewControls model
         ]
@@ -26,11 +26,7 @@ viewCanvas model =
     WebGL.toHtml
         [ width 600
         , height 600
-        , style
-            [ ( "display", "inline-block" )
-            , ( "width", "50%" )
-            , ( "cursor", "move" )
-            ]
+        , class "canvas"
         , on "mousedown" (Decode.map DragStart Mouse.position)
         ]
         [ WebGL.entity
@@ -58,13 +54,7 @@ perspective =
 viewControls : Model -> Html Msg
 viewControls model =
     div
-        [ style
-            [ ( "display", "inline-block" )
-            , ( "vertical-align", "top" )
-            , ( "width", "50%" )
-            , ( "text-align", "center" )
-            ]
-        ]
+        [ class "control-container" ]
         [ viewIterControl model
         , viewDistControl model
         , viewNoiseControl model
@@ -76,7 +66,7 @@ viewControls model =
 
 viewControlLabel : String -> Html Msg
 viewControlLabel t =
-    span [ style [ ( "vertical-align", "top" ) ] ] [ text t ]
+    span [ class "control-label" ] [ text t ]
 
 
 viewRangeInput : String -> String -> String -> number -> (String -> Msg) -> Html Msg
