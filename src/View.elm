@@ -118,7 +118,7 @@ viewRotaControl : Model -> Html Msg
 viewRotaControl model =
     div []
         [ viewControlLabel "ROTA "
-        , viewRangeInput "0" "2" "0.05" model.displ RotaInput
+        , viewRangeInput "0" "2" "0.05" model.rota RotaInput
         ]
 
 
