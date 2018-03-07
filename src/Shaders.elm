@@ -211,7 +211,7 @@ fragmentShader =
             vec3 light1Pos = vec3(4.0 * sin(time),
                                   5.0,
                                   4.0 * cos(time));
-            vec3 light1Intensity = vec3(0.4, 0.4, 0.4);
+            vec3 light1Intensity = vec3(light, light, light);
 
             color += phong_contrib(k_d, k_s, alpha, p, eye,
                                           light1Pos,
