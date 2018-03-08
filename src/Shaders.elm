@@ -71,7 +71,7 @@ fragmentShader =
             for(int m=0; m<MAX_ITERS; m++) {
                 if(m>iterations) return d;
 
-                vec3 a = mod( p*s, 2.0 )-1.0;
+                vec3 a = mod(p*s, 2.0) - 1.0;
                 s *= 3.0;
                 vec3 r = abs(1.0 - 3.0*abs(a));
 
@@ -203,15 +203,16 @@ fragmentShader =
         }
 
         vec3 lighting(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {
-            const vec3 ambientLight = 0.5 * vec3(1.0, 1.0, 1.0);
+            const vec3 ambientLight = vec3(0.5);
             vec3 color = ambientLight * k_a;
+            vec3 normal = estimate_normal(p);
 
-            float occ = calc_AO(p, estimate_normal(p));
+            float occ = calc_AO(p, normal);
 
             vec3 light1Pos = vec3(4.0 * sin(time),
                                   5.0,
                                   4.0 * cos(time));
-            vec3 light1Intensity = vec3(light, light, light);
+            vec3 light1Intensity = vec3(light);
 
             color += phong_contrib(k_d, k_s, alpha, p, eye,
                                           light1Pos,
@@ -223,6 +224,7 @@ fragmentShader =
             );
 
             color = mix(color, vec3(rand(vposition.xy * time)), noise);
+            color = mix(color, normal, 0.5);
 
             return color;
         }

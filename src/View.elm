@@ -24,9 +24,9 @@ view model =
 viewCanvas : Model -> Html Msg
 viewCanvas model =
     WebGL.toHtml
-        [ width 800
+        [ class "canvas"
+        , width 800
         , height 800
-        , class "canvas"
         , on "mousedown" (Decode.map DragStart Mouse.position)
         ]
         [ WebGL.entity
