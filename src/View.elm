@@ -87,7 +87,7 @@ viewRangeInput mn mx st val msg =
 viewIterControl : Model -> Html Msg
 viewIterControl model =
     div []
-        [ viewControlLabel "ITER "
+        [ viewControlLabel "ITERATIONS"
         , viewRangeInput "0" "8" "1" model.iterations IterationsInput
         ]
 
@@ -95,7 +95,7 @@ viewIterControl model =
 viewDistControl : Model -> Html Msg
 viewDistControl model =
     div []
-        [ viewControlLabel "DIST "
+        [ viewControlLabel "DISTANCE"
         , viewRangeInput "1" "20" "0.2" model.distance DistanceInput
         ]
 
@@ -103,7 +103,7 @@ viewDistControl model =
 viewNoiseControl : Model -> Html Msg
 viewNoiseControl model =
     div []
-        [ viewControlLabel "NOIS "
+        [ viewControlLabel "NOISE"
         , viewRangeInput "0" "1" "0.05" model.noise NoiseInput
         ]
 
@@ -111,7 +111,7 @@ viewNoiseControl model =
 viewDisplControl : Model -> Html Msg
 viewDisplControl model =
     div []
-        [ viewControlLabel "DISP "
+        [ viewControlLabel "DISPLACE"
         , viewRangeInput "0" "2" "0.05" model.displ DisplInput
         ]
 
@@ -119,7 +119,7 @@ viewDisplControl model =
 viewRotaControl : Model -> Html Msg
 viewRotaControl model =
     div []
-        [ viewControlLabel "ROTA "
+        [ viewControlLabel "ROTATION"
         , viewRangeInput "0" "2" "0.05" model.rota RotaInput
         ]
 
@@ -127,7 +127,7 @@ viewRotaControl model =
 viewLightControl : Model -> Html Msg
 viewLightControl model =
     div []
-        [ viewControlLabel "LGHT "
+        [ viewControlLabel "LIGHT"
         , viewRangeInput "0" "1" "0.05" model.light LightInput
         ]
 
@@ -135,6 +135,6 @@ viewLightControl model =
 viewColorControl : Model -> Html Msg
 viewColorControl model =
     div []
-        [ viewControlLabel "COLR "
+        [ viewControlLabel "COLOUR"
         , viewRangeInput "0" "1" "0.05" model.color ColorInput
         ]
