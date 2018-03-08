@@ -5,6 +5,7 @@ import Update exposing (Model, initModel, Msg(..), update)
 import View exposing (view)
 import Html exposing (program)
 import Mouse
+import Window
 
 
 main : Program Never Model Msg
@@ -26,11 +27,15 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
     case model.drag of
         Nothing ->
-            AnimationFrame.diffs Frame
+            Sub.batch
+                [ AnimationFrame.diffs Frame
+                , Window.resizes Resize
+                ]
 
         Just _ ->
             Sub.batch
                 [ AnimationFrame.diffs Frame
+                , Window.resizes Resize
                 , Mouse.moves DragAt
                 , Mouse.ups DragEnd
                 ]

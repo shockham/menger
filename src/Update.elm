@@ -2,6 +2,7 @@ module Update exposing (Model, initModel, Msg(..), update, getPosition)
 
 import Time exposing (Time)
 import Mouse exposing (Position)
+import Window exposing (Size)
 
 
 type alias Model =
@@ -15,6 +16,7 @@ type alias Model =
     , color : Float
     , drag : Maybe Drag
     , position : Position
+    , window : Size
     }
 
 
@@ -26,7 +28,7 @@ type alias Drag =
 
 initModel : Model
 initModel =
-    Model 0 1 6 0.1 0 0 0.5 0 Nothing (Position 0 0)
+    Model 0 1 6 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
 
 
 type Msg
@@ -41,6 +43,7 @@ type Msg
     | DragStart Position
     | DragAt Position
     | DragEnd Position
+    | Resize Size
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -82,6 +85,9 @@ update msg model =
 
         DragEnd _ ->
             { model | drag = Nothing, position = (getPosition model) } ! []
+
+        Resize size ->
+            { model | window = size } ! []
 
 
 getPosition : Model -> Position
