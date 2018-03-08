@@ -16,6 +16,7 @@ type alias Uniforms =
     , displ : Float
     , rota : Float
     , light : Float
+    , ncolor : Float
     , mouse_pos : Vec2
     }
 
@@ -59,6 +60,7 @@ fragmentShader =
         uniform float displ;
         uniform float rota;
         uniform float light;
+        uniform float ncolor;
         uniform vec2 mouse_pos;
 
         varying vec3 vposition;
@@ -224,7 +226,7 @@ fragmentShader =
             );
 
             color = mix(color, vec3(rand(vposition.xy * time)), noise);
-            color = mix(color, normal, 0.5);
+            color = mix(color, normal, ncolor);
 
             return color;
         }

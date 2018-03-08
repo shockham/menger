@@ -41,6 +41,7 @@ viewCanvas model =
             , displ = model.displ
             , rota = model.rota
             , light = model.light
+            , ncolor = model.color
             , mouse_pos = (vec2 (toFloat model.position.x) (toFloat model.position.y))
             }
         ]
@@ -61,6 +62,7 @@ viewControls model =
         , viewDisplControl model
         , viewRotaControl model
         , viewLightControl model
+        , viewColorControl model
         ]
 
 
@@ -127,4 +129,12 @@ viewLightControl model =
     div []
         [ viewControlLabel "LGHT "
         , viewRangeInput "0" "1" "0.05" model.light LightInput
+        ]
+
+
+viewColorControl : Model -> Html Msg
+viewColorControl model =
+    div []
+        [ viewControlLabel "COLR "
+        , viewRangeInput "0" "1" "0.05" model.color ColorInput
         ]
