@@ -209,6 +209,8 @@ fragmentShader =
             vec3 color = ambientLight * k_a;
             vec3 normal = estimate_normal(p);
 
+            color = mix(color, normal, ncolor);
+
             float occ = calc_AO(p, normal);
 
             vec3 light1Pos = vec3(4.0 * sin(time),
@@ -226,7 +228,6 @@ fragmentShader =
             );
 
             color = mix(color, vec3(rand(vposition.xy * time)), noise);
-            color = mix(color, normal, ncolor);
 
             return color;
         }
