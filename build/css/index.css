@@ -3,11 +3,11 @@ body { height: 100%; }
 
 .container { height: 100%; overflow: hidden; }
 
-.control-container { display: inline-block; vertical-align: top; text-align: right;
-    float: right; }
+.control-container { display: block; vertical-align: top; text-align: right;
+    float: right; position: fixed; top: 0; right: 0; }
 .control-label { vertical-align: 40%; line-height: 30px; }
 
-.canvas { display: inline-block; height: 100%; cursor: move; }
+.canvas { display: inline-block; height: 100%; width: 100%; cursor: move; }
 
 
 input[type=range] { height: 36px; -webkit-appearance: none; }

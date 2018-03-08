@@ -15,7 +15,10 @@ import Json.Decode as Decode
 
 view : Model -> Html Msg
 view model =
-    div [ class "container" ]
+    div
+        [ class "container"
+        , onFocus Init
+        ]
         [ viewCanvas model
         , viewControls model
         ]
@@ -25,7 +28,7 @@ viewCanvas : Model -> Html Msg
 viewCanvas model =
     WebGL.toHtml
         [ class "canvas"
-        , width model.window.height
+        , width model.window.width
         , height model.window.height
         , on "mousedown" (Decode.map DragStart Mouse.position)
         ]
@@ -42,7 +45,8 @@ viewCanvas model =
             , rota = model.rota
             , light = model.light
             , ncolor = model.color
-            , mouse_pos = (vec2 (toFloat model.position.x) (toFloat model.position.y))
+            , mouse_pos = vec2 (toFloat model.position.x) (toFloat model.position.y)
+            , dimensions = vec2 (toFloat model.window.width) (toFloat model.window.height)
             }
         ]
 

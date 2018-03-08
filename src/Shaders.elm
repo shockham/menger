@@ -18,6 +18,7 @@ type alias Uniforms =
     , light : Float
     , ncolor : Float
     , mouse_pos : Vec2
+    , dimensions : Vec2
     }
 
 
@@ -62,6 +63,7 @@ fragmentShader =
         uniform float light;
         uniform float ncolor;
         uniform vec2 mouse_pos;
+        uniform vec2 dimensions;
 
         varying vec3 vposition;
         varying vec3 vcolor;
@@ -245,7 +247,7 @@ fragmentShader =
         }
 
         void main() {
-            vec2 resolution = vec2(400);
+            vec2 resolution = dimensions;
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
             vec3 cam_pos = vec3(
                 distance * cos(mouse_pos.x / MOUSE_POS_DIV),
