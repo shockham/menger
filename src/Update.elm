@@ -3,7 +3,6 @@ module Update exposing (Model, initModel, Msg(..), update, getPosition)
 import Time exposing (Time)
 import Mouse exposing (Position)
 import Window exposing (Size)
-import Task
 
 
 type alias Model =
@@ -29,12 +28,11 @@ type alias Drag =
 
 initModel : Model
 initModel =
-    Model 0 1 6 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
+    Model 0 2 6 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
 
 
 type Msg
-    = Init
-    | Frame Time
+    = Frame Time
     | IterationsInput String
     | DistanceInput String
     | NoiseInput String
@@ -51,9 +49,6 @@ type Msg
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Init ->
-            model ! [ Task.perform Resize Window.size ]
-
         Frame t ->
             { model | time = model.time + t } ! []
 

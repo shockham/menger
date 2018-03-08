@@ -15,10 +15,7 @@ import Json.Decode as Decode
 
 view : Model -> Html Msg
 view model =
-    div
-        [ class "container"
-        , onFocus Init
-        ]
+    div [ class "container" ]
         [ viewCanvas model
         , viewControls model
         ]

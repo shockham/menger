@@ -6,6 +6,7 @@ import View exposing (view)
 import Html exposing (program)
 import Mouse
 import Window
+import Task
 
 
 main : Program Never Model Msg
@@ -20,7 +21,7 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( initModel, Cmd.none )
+    ( initModel, Task.perform Resize Window.size )
 
 
 subscriptions : Model -> Sub Msg
