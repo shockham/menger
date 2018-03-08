@@ -4,7 +4,7 @@ body { height: 100%; }
 .container { height: 100%; overflow: hidden; }
 
 .control-container { display: block; vertical-align: top; text-align: right;
-    float: right; position: fixed; top: 0; right: 0; }
+    float: right; position: fixed; top: 20px; right: 20px; }
 .control-label { vertical-align: 40%; line-height: 30px; }
 
 .canvas { display: inline-block; height: 100%; width: 100%; cursor: move; }
