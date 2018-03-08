@@ -28,7 +28,7 @@ type alias Drag =
 
 initModel : Model
 initModel =
-    Model 0 2 6 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
+    Model 0 2 8 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
 
 
 type Msg
