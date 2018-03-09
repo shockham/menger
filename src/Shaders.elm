@@ -250,10 +250,10 @@ fragmentShader =
             vec2 resolution = dimensions;
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
             vec3 cam_pos = vec3(
-                distance * cos(mouse_pos.x / MOUSE_POS_DIV),
-                distance * sin(clamp(mouse_pos.y / MOUSE_POS_DIV, -HALF_PI, HALF_PI)),
-                distance * sin(mouse_pos.x / MOUSE_POS_DIV)
-            );
+                cos(mouse_pos.x / MOUSE_POS_DIV) * cos(mouse_pos.y / MOUSE_POS_DIV),
+                sin(mouse_pos.y / MOUSE_POS_DIV),
+                sin(mouse_pos.x / MOUSE_POS_DIV) * cos(mouse_pos.y / MOUSE_POS_DIV)
+            ) * distance;
 
             mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
             vec3 v_dir = (view_mat * vec4(dir, 0.0)).xyz;

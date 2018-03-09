@@ -3,6 +3,7 @@ module Update exposing (Model, initModel, Msg(..), update, getPosition)
 import Time exposing (Time)
 import Mouse exposing (Position)
 import Window exposing (Size)
+import Basics exposing (clamp)
 
 
 type alias Model =
@@ -99,4 +100,14 @@ getPosition { position, drag } =
         Just { start, current } ->
             Position
                 (position.x + current.x - start.x)
-                (position.y + current.y - start.y)
+                (clampY (position.y + current.y - start.y))
+
+
+clampY : Int -> Int
+clampY y =
+    clamp -boundY boundY y
+
+
+boundY : Int
+boundY =
+    round ((pi / 2.0) * 3000)
