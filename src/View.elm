@@ -28,6 +28,7 @@ viewCanvas model =
         , width model.window.width
         , height model.window.height
         , on "mousedown" (Decode.map DragStart Mouse.position)
+        , on "wheel" (Decode.map MouseWheel (Decode.field "deltaY" Decode.float))
         ]
         [ WebGL.entity
             vertexShader

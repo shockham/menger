@@ -45,6 +45,7 @@ type Msg
     | DragAt Position
     | DragEnd Position
     | Resize Size
+    | MouseWheel Float
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -89,6 +90,9 @@ update msg model =
 
         Resize size ->
             { model | window = size } ! []
+
+        MouseWheel delta ->
+            { model | distance = model.distance + delta } ! []
 
 
 getPosition : Model -> Position
