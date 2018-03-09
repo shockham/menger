@@ -59,7 +59,6 @@ viewControls model =
     div
         [ class "control-container" ]
         [ viewIterControl model
-        , viewDistControl model
         , viewNoiseControl model
         , viewDisplControl model
         , viewRotaControl model
@@ -91,14 +90,6 @@ viewIterControl model =
     div []
         [ viewControlLabel "ITERATIONS"
         , viewRangeInput "0" "8" "1" model.iterations IterationsInput
-        ]
-
-
-viewDistControl : Model -> Html Msg
-viewDistControl model =
-    div []
-        [ viewControlLabel "DISTANCE"
-        , viewRangeInput "1" "20" "0.2" model.distance DistanceInput
         ]
 
 
