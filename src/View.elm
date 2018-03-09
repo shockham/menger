@@ -60,12 +60,12 @@ viewControls model =
         [ class "control-container" ]
         [ div [] [ text "SHAPE" ]
         , viewIterControl model
-        , viewDisplControl model
         , viewRotaControl model
+        , viewDisplControl model
         , div [] [ text "COLOURS" ]
-        , viewNoiseControl model
-        , viewLightControl model
         , viewColorControl model
+        , viewLightControl model
+        , viewNoiseControl model
         ]
 
 
