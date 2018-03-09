@@ -58,10 +58,12 @@ viewControls : Model -> Html Msg
 viewControls model =
     div
         [ class "control-container" ]
-        [ viewIterControl model
-        , viewNoiseControl model
+        [ div [] [ text "SHAPE" ]
+        , viewIterControl model
         , viewDisplControl model
         , viewRotaControl model
+        , div [] [ text "COLOURS" ]
+        , viewNoiseControl model
         , viewLightControl model
         , viewColorControl model
         ]
