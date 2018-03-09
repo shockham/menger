@@ -92,7 +92,7 @@ update msg model =
             { model | window = size } ! []
 
         MouseWheel delta ->
-            { model | distance = model.distance + delta } ! []
+            { model | distance = model.distance + (delta / 10) } ! []
 
 
 getPosition : Model -> Position
