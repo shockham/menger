@@ -3,8 +3,8 @@ body { height: 100%; }
 
 .container { height: 100%; overflow: hidden; }
 
-.control-container { display: block; vertical-align: top; text-align: right;
-    float: right; position: fixed; top: 20px; right: 20px; }
+.control-container { display: block; vertical-align: top; text-align: right; padding: 10px;
+    float: right; position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.3); }
 .control-label { vertical-align: 40%; line-height: 30px; }
 
 .canvas { display: inline-block; height: 100%; width: 100%; cursor: move; }
