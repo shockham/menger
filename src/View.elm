@@ -105,7 +105,7 @@ viewDisplControl : Model -> Html Msg
 viewDisplControl model =
     div []
         [ viewControlLabel "DISPLACE"
-        , viewRangeInput "0" "2" "0.05" model.displ DisplInput
+        , viewRangeInput "0" "5" "0.05" model.displ DisplInput
         ]
 
 
