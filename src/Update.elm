@@ -83,25 +83,31 @@ update msg model =
             { model | time = model.time + t } ! []
 
         IterationsInput val ->
-            { model | iterations = Result.withDefault 1 (String.toInt val) } ! []
+            { model | iterations = Result.withDefault 1 (String.toInt val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         DistanceInput val ->
             { model | distance = Result.withDefault 1 (String.toFloat val) } ! []
 
         NoiseInput val ->
-            { model | noise = Result.withDefault 0 (String.toFloat val) } ! []
+            { model | noise = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         DisplInput val ->
-            { model | displ = Result.withDefault 0 (String.toFloat val) } ! []
+            { model | displ = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         RotaInput val ->
-            { model | rota = Result.withDefault 0 (String.toFloat val) } ! []
+            { model | rota = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         LightInput val ->
-            { model | light = Result.withDefault 0 (String.toFloat val) } ! []
+            { model | light = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         ColorInput val ->
-            { model | color = Result.withDefault 0 (String.toFloat val) } ! []
+            { model | color = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
 
         DragStart xy ->
             { model | drag = (Just (Drag xy xy)), position = (getPosition model) } ! []
@@ -146,3 +152,19 @@ clampY y =
 boundY : Int
 boundY =
     round ((pi / 2.0) * 3000)
+
+
+getHash : Model -> String
+getHash model =
+    "#"
+        ++ (toString model.iterations)
+        ++ ","
+        ++ (toString model.rota)
+        ++ ","
+        ++ (toString model.displ)
+        ++ ","
+        ++ (toString model.color)
+        ++ ","
+        ++ (toString model.light)
+        ++ ","
+        ++ (toString model.noise)
