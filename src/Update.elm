@@ -4,6 +4,8 @@ import Time exposing (Time)
 import Mouse exposing (Position)
 import Window exposing (Size)
 import Basics exposing (clamp)
+import Navigation
+import Array
 
 
 type alias Model =
@@ -27,9 +29,14 @@ type alias Drag =
     }
 
 
-initModel : Model
-initModel =
-    Model 0 2 8 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
+initModel : Navigation.Location -> Model
+initModel location =
+    let
+        initVals =
+            String.split "," location.hash
+                |> Array.fromList
+    in
+        Model 0 2 8 0.1 0 0 0.5 0 Nothing (Position 0 0) (Size 800 800)
 
 
 type Msg
@@ -46,6 +53,7 @@ type Msg
     | DragEnd Position
     | Resize Size
     | MouseWheel Float
+    | UrlChange Navigation.Location
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -93,6 +101,9 @@ update msg model =
 
         MouseWheel delta ->
             { model | distance = model.distance + (delta / 10) } ! []
+
+        UrlChange location ->
+            model ! []
 
 
 getPosition : Model -> Position

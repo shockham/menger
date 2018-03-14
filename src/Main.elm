@@ -3,15 +3,15 @@ module Main exposing (main)
 import AnimationFrame
 import Update exposing (Model, initModel, Msg(..), update)
 import View exposing (view)
-import Html exposing (program)
 import Mouse
 import Window
 import Task
+import Navigation
 
 
 main : Program Never Model Msg
 main =
-    Html.program
+    Navigation.program UrlChange
         { init = init
         , view = view
         , subscriptions = subscriptions
@@ -19,9 +19,9 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( initModel, Task.perform Resize Window.size )
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+    ( initModel location, Task.perform Resize Window.size )
 
 
 subscriptions : Model -> Sub Msg
