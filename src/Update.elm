@@ -44,7 +44,18 @@ initModel location =
                 |> Array.map String.toFloat
                 |> Array.map (Result.withDefault 0)
     in
-        Model 0 2 8 0.1 0 (indexDefault 1 0 initVals) 0.5 0 Nothing (Position 0 0) (Size 800 800)
+        { time = 0
+        , iterations = 2
+        , distance = 8
+        , noise = 0.1
+        , displ = 0
+        , rota = (indexDefault 1 0 initVals)
+        , light = 0.5
+        , color = 0
+        , drag = Nothing
+        , position = (Position 0 0)
+        , window = (Size 800 800)
+        }
 
 
 type Msg
