@@ -39,7 +39,8 @@ initModel : Navigation.Location -> Model
 initModel location =
     let
         initVals =
-            String.split "," location.hash
+            String.dropLeft 1 location.hash
+                |> String.split ","
                 |> Array.fromList
                 |> Array.map String.toFloat
                 |> Array.map (Result.withDefault 0)
