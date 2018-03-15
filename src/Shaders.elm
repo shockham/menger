@@ -207,7 +207,7 @@ fragmentShader =
         }
 
         vec3 lighting(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {
-            const vec3 ambientLight = vec3(0.5);
+            const vec3 ambientLight = vec3(0.6);
             vec3 color = ambientLight * k_a;
             vec3 normal = estimate_normal(p);
 
