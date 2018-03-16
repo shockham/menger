@@ -71,20 +71,20 @@ fragmentShader =
 
         float iter_cyl(vec3 p, float init_d){
             float d = init_d;
-            float s = 1.;
+            float s = 1.0;
             for(int i=0; i<MAX_ITERS; i++) {
                 if(i>iterations) return d;
 
-                p *= 3.;
-                s*=3.;
+                p *= 3.0;
+                s *= 3.0;
 
                 float xy = dot(p.xy,p.xy);
                 float xz = dot(p.xz,p.xz);
                 float yz = dot(p.yz,p.yz);
-                float d2 = (sqrt(min(xy,min(xz,yz))) - 1.) / s;
+                float d2 = (sqrt(min(xy,min(xz,yz))) - 1.0) / s;
 
                 d = max(d,-d2);
-                p = mod(p+1. , 2.) - 1.;
+                p = mod(p + 1.0, 2.0) - 1.0;
             }
             return d;
         }
@@ -103,7 +103,7 @@ fragmentShader =
                 float da = max(r.x,r.y);
                 float db = max(r.y,r.z);
                 float dc = max(r.z,r.x);
-                float c = (min(da,min(db,dc))-1.0)/s;
+                float c = (min(da,min(db,dc)) - 1.0) / s;
 
                 d = max(d,c);
             }
