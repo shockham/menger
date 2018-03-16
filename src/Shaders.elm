@@ -237,6 +237,7 @@ fragmentShader =
             vec3 normal = estimate_normal(p);
 
             color = mix(color, normal, ncolor);
+            color = mix(color, vec3(1.0), 0.5);
 
             float occ = calc_AO(p, normal);
 
