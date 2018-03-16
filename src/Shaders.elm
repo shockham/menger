@@ -68,6 +68,27 @@ fragmentShader =
         varying vec3 vposition;
         varying vec3 vcolor;
 
+
+        float iter_cyl(vec3 p, float init_d){
+            float d = init_d;
+            float s = 1.;
+            for(int i=0; i<MAX_ITERS; i++) {
+                if(i>iterations) return d;
+
+                p *= 3.;
+                s*=3.;
+
+                float xy = dot(p.xy,p.xy);
+                float xz = dot(p.xz,p.xz);
+                float yz = dot(p.yz,p.yz);
+                float d2 = (sqrt(min(xy,min(xz,yz))) - 1.) / s;
+
+                d = max(d,-d2);
+                p = mod(p+1. , 2.) - 1.;
+            }
+            return d;
+        }
+
         float iter_box(vec3 p, float init_d) {
             float d = init_d;
 
@@ -99,6 +120,10 @@ fragmentShader =
             return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));
         }
 
+        float roundbox( vec3 p, vec3 b, float r ) {
+            return length(max(abs(p)-b,0.0))-r;
+        }
+
         float disp(vec3 p, float amt) {
             return sin(amt*p.x)*sin(amt*p.y)*sin(amt*p.z);
         }
@@ -116,9 +141,9 @@ fragmentShader =
         }
 
         float scene(vec3 p) {
-            return iter_box(
+            return iter_cyl(
                 p,
-                box((rotateY(rota) * vec4(p, 1.0)).xyz + disp(p, displ), vec3(1.0))
+                roundbox((rotateY(rota) * vec4(p, 1.0)).xyz + disp(p, displ), vec3(0.2), 1.0)
             );
         }
 
