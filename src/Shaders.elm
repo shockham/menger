@@ -91,7 +91,6 @@ fragmentShader =
 
         float iter_box(vec3 p, float init_d) {
             float d = init_d;
-
             float s = 1.0;
             for(int m=0; m<MAX_ITERS; m++) {
                 if(m>iterations) return d;
@@ -154,7 +153,7 @@ fragmentShader =
                 if (dist < EPSILON) {
                     return depth;
                 }
-                depth += dist;
+                depth += dist / 2.0;
                 if (depth >= end) {
                     return end;
                 }
