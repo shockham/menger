@@ -45,6 +45,7 @@ viewCanvas model =
             , ncolor = model.color
             , round = model.round
             , twist = model.twist
+            , size = model.size
             , mouse_pos = vec2 (toFloat model.position.x) (toFloat model.position.y)
             , dimensions = vec2 (toFloat model.window.width) (toFloat model.window.height)
             }
@@ -66,6 +67,7 @@ viewControls model =
         , viewDisplControl model
         , viewRoundControl model
         , viewTwistControl model
+        , viewSizeControl model
         , div [] [ text "COLOURS" ]
         , viewColorControl model
         , viewLightControl model
@@ -152,4 +154,12 @@ viewTwistControl model =
     div []
         [ viewControlLabel "TWIST"
         , viewRangeInput "0" "6" "0.5" model.twist TwistInput
+        ]
+
+
+viewSizeControl : Model -> Html Msg
+viewSizeControl model =
+    div []
+        [ viewControlLabel "SIZE"
+        , viewRangeInput "0" "2" "0.05" model.size SizeInput
         ]

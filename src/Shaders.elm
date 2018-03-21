@@ -19,6 +19,7 @@ type alias Uniforms =
     , ncolor : Float
     , round : Float
     , twist : Float
+    , size : Float
     , mouse_pos : Vec2
     , dimensions : Vec2
     }
@@ -66,6 +67,7 @@ fragmentShader =
         uniform float ncolor;
         uniform float round;
         uniform float twist;
+        uniform float size;
         uniform vec2 mouse_pos;
         uniform vec2 dimensions;
 
@@ -156,7 +158,7 @@ fragmentShader =
                 p,
                 roundbox(
                     (rotateY(rota) * vec4(p, 1.0)).xyz + disp(p, displ),
-                    vec3(round),
+                    vec3(size),
                     round
                 )
             );
