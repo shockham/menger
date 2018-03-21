@@ -153,11 +153,12 @@ fragmentShader =
         }
 
         float scene(vec3 p) {
+            vec3 rp = twist_pos((rotateY(rota) * vec4(p, 1.0)).xyz);
             p = twist_pos(p);
             return iter_cyl(
                 p,
                 roundbox(
-                    (rotateY(rota) * vec4(p, 1.0)).xyz + disp(p, displ),
+                    rp + disp(p, displ),
                     vec3(size),
                     round
                 )
