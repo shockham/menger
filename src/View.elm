@@ -43,6 +43,7 @@ viewCanvas model =
             , rota = model.rota
             , light = model.light
             , ncolor = model.color
+            , round = model.round
             , mouse_pos = vec2 (toFloat model.position.x) (toFloat model.position.y)
             , dimensions = vec2 (toFloat model.window.width) (toFloat model.window.height)
             }
@@ -62,6 +63,7 @@ viewControls model =
         , viewIterControl model
         , viewRotaControl model
         , viewDisplControl model
+        , viewRoundControl model
         , div [] [ text "COLOURS" ]
         , viewColorControl model
         , viewLightControl model
@@ -132,4 +134,12 @@ viewColorControl model =
     div []
         [ viewControlLabel "COLOUR"
         , viewRangeInput "0" "1" "0.05" model.color ColorInput
+        ]
+
+
+viewRoundControl : Model -> Html Msg
+viewRoundControl model =
+    div []
+        [ viewControlLabel "ROUND"
+        , viewRangeInput "0" "2" "0.05" model.round RoundInput
         ]
