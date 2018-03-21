@@ -151,5 +151,5 @@ viewTwistControl : Model -> Html Msg
 viewTwistControl model =
     div []
         [ viewControlLabel "TWIST"
-        , viewRangeInput "0" "10" "0.5" model.twist TwistInput
+        , viewRangeInput "0" "6" "0.5" model.twist TwistInput
         ]
