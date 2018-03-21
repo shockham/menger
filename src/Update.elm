@@ -18,6 +18,7 @@ type alias Model =
     , light : Float
     , color : Float
     , round : Float
+    , twist : Float
     , drag : Maybe Drag
     , position : Position
     , window : Size
@@ -55,6 +56,7 @@ initModel location =
         , light = indexDefault 4 0.5 initVals
         , color = indexDefault 3 0 initVals
         , round = indexDefault 6 1 initVals
+        , twist = indexDefault 7 0 initVals
         , drag = Nothing
         , position = (Position 0 0)
         , window = (Size 800 800)
@@ -71,6 +73,7 @@ type Msg
     | LightInput String
     | ColorInput String
     | RoundInput String
+    | TwistInput String
     | DragStart Position
     | DragAt Position
     | DragEnd Position
@@ -114,6 +117,10 @@ update msg model =
 
         RoundInput val ->
             { model | round = Result.withDefault 0 (String.toFloat val) }
+                ! [ Navigation.modifyUrl (getHash model) ]
+
+        TwistInput val ->
+            { model | twist = Result.withDefault 0 (String.toFloat val) }
                 ! [ Navigation.modifyUrl (getHash model) ]
 
         DragStart xy ->

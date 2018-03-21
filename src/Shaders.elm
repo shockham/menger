@@ -18,6 +18,7 @@ type alias Uniforms =
     , light : Float
     , ncolor : Float
     , round : Float
+    , twist : Float
     , mouse_pos : Vec2
     , dimensions : Vec2
     }
@@ -64,6 +65,7 @@ fragmentShader =
         uniform float light;
         uniform float ncolor;
         uniform float round;
+        uniform float twist;
         uniform vec2 mouse_pos;
         uniform vec2 dimensions;
 
@@ -141,7 +143,15 @@ fragmentShader =
             );
         }
 
+        vec3 twist_pos(vec3 p) {
+            float c = cos(twist*p.y);
+            float s = sin(twist*p.y);
+            mat2  m = mat2(c,-s,s,c);
+            return vec3(m*p.xz,p.y);
+        }
+
         float scene(vec3 p) {
+            p = twist_pos(p);
             return iter_cyl(
                 p,
                 roundbox(
