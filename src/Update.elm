@@ -49,13 +49,13 @@ initModel location =
     in
         { time = 0
         , iterations = round (indexDefault 0 2 initVals)
-        , distance = 8
+        , distance = 12
         , noise = indexDefault 5 0.1 initVals
         , displ = indexDefault 2 0 initVals
         , rota = indexDefault 1 0 initVals
         , light = indexDefault 4 0.5 initVals
         , color = indexDefault 3 0 initVals
-        , round = indexDefault 6 1 initVals
+        , round = indexDefault 6 0.6 initVals
         , twist = indexDefault 7 0 initVals
         , drag = Nothing
         , position = (Position 0 0)
