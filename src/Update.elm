@@ -189,3 +189,9 @@ getHash model =
         ++ (toString model.light)
         ++ ","
         ++ (toString model.noise)
+        ++ ","
+        ++ (toString model.round)
+        ++ ","
+        ++ (toString model.twist)
+        ++ ","
+        ++ (toString model.size)
