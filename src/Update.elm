@@ -68,7 +68,6 @@ initModel location =
 type Msg
     = Frame Time
     | IterationsInput String
-    | DistanceInput String
     | NoiseInput String
     | DisplInput String
     | RotaInput String
@@ -94,9 +93,6 @@ update msg model =
         IterationsInput val ->
             { model | iterations = Result.withDefault 1 (String.toInt val) }
                 ! [ Navigation.modifyUrl (getHash model) ]
-
-        DistanceInput val ->
-            { model | distance = Result.withDefault 1 (String.toFloat val) } ! []
 
         NoiseInput val ->
             { model | noise = Result.withDefault 0 (String.toFloat val) }
