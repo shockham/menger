@@ -172,7 +172,7 @@ fragmentShader =
                 if (dist < EPSILON) {
                     return depth;
                 }
-                depth += dist / 2.0;
+                depth += dist / (1.0 + displ);
                 if (depth >= end) {
                     return end;
                 }
