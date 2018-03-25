@@ -143,7 +143,10 @@ update msg model =
             { model | window = size } ! []
 
         MouseWheel delta ->
-            { model | distance = max 0.1 (model.distance + ((delta * model.distance) / 100)) } ! []
+            { model
+                | distance = clamp 0.1 80 (model.distance + ((delta * model.distance) / 100))
+            }
+                ! []
 
         UrlChange location ->
             model ! []
