@@ -11,7 +11,7 @@
     </head>
     <body>
         <script type="text/javascript" src="./js/main.js"></script>
-        <script>window.Elm = require('./js/main.js');</script>
+        <script>if(window.Elm === undefined) window.Elm = require('./js/main.js');</script>
         <script>Elm.Main.fullscreen();</script>
     </body>
 </html>
