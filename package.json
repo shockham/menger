@@ -1,0 +1,12 @@
+{
+  "name": "menger",
+  "version": "1.0.0",
+  "description": "Tool to play around with a menger sponge.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^1.8.4"
+  }
+}

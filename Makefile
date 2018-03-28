@@ -9,3 +9,6 @@ live:
 
 clean:
 	rm build/js/main.js
+
+electron: all
+	yarn start
