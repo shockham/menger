@@ -4,7 +4,8 @@
   "description": "Tool to play around with a menger sponge.",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "elm-make src/*.elm --warn --output=build/js/main.js"
   },
   "devDependencies": {
     "electron": "^1.8.4"
