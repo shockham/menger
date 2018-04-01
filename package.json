@@ -6,7 +6,8 @@
   "scripts": {
     "start": "electron .",
     "build": "elm-make src/*.elm --warn --output=build/js/main.js",
-    "live": "elm-live src/*.elm --warn --output=build/js/main.js"
+    "live": "elm-live src/*.elm --warn --output=build/js/main.js",
+    "clean": "rm build/js/main.js"
   },
   "devDependencies": {
     "electron": "^1.8.4"
