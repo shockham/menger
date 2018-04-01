@@ -10,6 +10,7 @@
     "clean": "rm build/js/main.js"
   },
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.8.4",
+    "elm": "0.18.0"
   }
 }
