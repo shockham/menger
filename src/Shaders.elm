@@ -133,15 +133,13 @@ fragmentShader =
             return sin(amt*p.x)*sin(amt*p.y)*sin(amt*p.z);
         }
 
-        mat4 rotateY(float theta) {
+        mat3 rotateY(float theta) {
             float c = cos(theta);
             float s = sin(theta);
-
-            return mat4(
-                vec4(c, 0, s, 0),
-                vec4(0, 1, 0, 0),
-                vec4(-s, 0, c, 0),
-                vec4(0, 0, 0, 1)
+            return mat3(
+                vec3(c, 0, s),
+                vec3(0, 1, 0),
+                vec3(-s, 0, c)
             );
         }
 
@@ -153,7 +151,7 @@ fragmentShader =
         }
 
         float scene(vec3 p) {
-            vec3 rp = twist_pos((rotateY(rota) * vec4(p, 1.0)).xyz);
+            vec3 rp = twist_pos(rotateY(rota) * p);
             p = twist_pos(p);
             return iter_cyl(
                 p,
