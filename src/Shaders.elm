@@ -257,23 +257,45 @@ fragmentShader =
 
             float occ = calc_AO(p, normal);
 
-            vec3 light1Pos = vec3(4.0 * sin(time),
+            vec3 light_pos = vec3(4.0 * sin(time),
                                   5.0,
                                   4.0 * cos(time));
-            vec3 light1Intensity = vec3(light);
+            vec3 light_intensity = vec3(light);
 
             color += phong_contrib(k_d, k_s, alpha, p, eye,
-                                          light1Pos,
-                                          light1Intensity);
+                                          light_pos,
+                                          light_intensity);
             color = mix(
                 color,
-                color * occ * softshadow(p, normalize(light1Pos), 0.02, 5.0),
+                color * occ * softshadow(p, normalize(light_pos), 0.02, 5.0),
                 light
             );
 
             color = mix(color, vec3(rand(vposition.xy * time)), noise);
 
             return color;
+        }
+
+
+        vec4 render(vec3 cam_pos, vec3 v_dir) {
+            float dist = shortest_dist(cam_pos, v_dir, MIN_DIST, MAX_DIST);
+
+            if (dist > MAX_DIST - EPSILON) {
+                return vec4(0.0, 0.0, 0.0, 0.0);
+            }
+
+            vec3 p = cam_pos + dist * v_dir;
+
+            vec3 color = lighting(
+                vec3(0.2, 0.2, 0.2),
+                vec3(0.2, 0.2, 0.2),
+                vec3(1.0, 1.0, 1.0),
+                20.0,
+                p,
+                cam_pos
+            );
+
+            return vec4(color, 1.0);
         }
 
         mat4 view_matrix(vec3 eye, vec3 center, vec3 up) {
@@ -300,24 +322,6 @@ fragmentShader =
             mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
             vec3 v_dir = (view_mat * vec4(dir, 0.0)).xyz;
 
-            float dist = shortest_dist(cam_pos, v_dir, MIN_DIST, MAX_DIST);
-
-            if (dist > MAX_DIST - EPSILON) {
-                // Didn't hit anything
-                gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
-                return;
-            }
-
-            // The closest point on the surface to the eyepoint along the view ray
-            vec3 p = cam_pos + dist * v_dir;
-
-            vec3 K_a = vec3(0.2, 0.2, 0.2);
-            vec3 K_d = vec3(0.2, 0.2, 0.2);
-            vec3 K_s = vec3(1.0, 1.0, 1.0);
-            float shininess = 20.0;
-
-            vec3 color = lighting(K_a, K_d, K_s, shininess, p, cam_pos);
-
-            gl_FragColor = vec4(color, 1.0);
+            gl_FragColor = render(cam_pos, v_dir);
         }
     |]
