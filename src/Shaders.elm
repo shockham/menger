@@ -95,6 +95,26 @@ fragmentShader =
             return d;
         }
 
+        float iter_box(vec3 p, float init_d) {
+            float d = init_d;
+            float s = 1.0;
+            for(int m = 0; m < MAX_ITERS; m++) {
+                if(m > iterations) return d;
+
+                vec3 a = mod(p*s, 2.0) - 1.0;
+                s *= 3.0;
+                vec3 r = abs(1.0 - 3.0 * abs(a));
+
+                float da = max(r.x,r.y);
+                float db = max(r.y,r.z);
+                float dc = max(r.z,r.x);
+                float c = (min(da,min(db,dc)) - 1.0) / s;
+
+                d = max(d,c);
+            }
+            return d;
+        }
+
         float sphere(vec3 p, float s) {
             return length(p) - s;
         }
