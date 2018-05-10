@@ -75,11 +75,11 @@ fragmentShader =
         varying vec3 vcolor;
 
 
-        float iter_cyl(vec3 p, float init_d){
+        float iter_cyl(vec3 p, float init_d) {
             float d = init_d;
             float s = 1.0;
-            for(int i=0; i<MAX_ITERS; i++) {
-                if(i>iterations) return d;
+            for(int i = 0; i < MAX_ITERS; i++) {
+                if(i > iterations) return d;
 
                 p *= 3.0;
                 s *= 3.0;
@@ -92,27 +92,6 @@ fragmentShader =
                 d = max(d,-d2);
                 p = mod(p + 1.0, 2.0) - 1.0;
             }
-            return d;
-        }
-
-        float iter_box(vec3 p, float init_d) {
-            float d = init_d;
-            float s = 1.0;
-            for(int m=0; m<MAX_ITERS; m++) {
-                if(m>iterations) return d;
-
-                vec3 a = mod(p*s, 2.0) - 1.0;
-                s *= 3.0;
-                vec3 r = abs(1.0 - 3.0*abs(a));
-
-                float da = max(r.x,r.y);
-                float db = max(r.y,r.z);
-                float dc = max(r.z,r.x);
-                float c = (min(da,min(db,dc)) - 1.0) / s;
-
-                d = max(d,c);
-            }
-
             return d;
         }
 
@@ -182,9 +161,9 @@ fragmentShader =
         }
 
         vec3 phong_contrib(vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye,
-                                  vec3 lightPos, vec3 lightIntensity) {
+                                  vec3 light_pos, vec3 light_intensity) {
             vec3 N = estimate_normal(p);
-            vec3 L = normalize(lightPos - p);
+            vec3 L = normalize(light_pos - p);
             vec3 V = normalize(eye - p);
             vec3 R = normalize(reflect(-L, N));
 
@@ -192,30 +171,26 @@ fragmentShader =
             float dotRV = dot(R, V);
 
             if (dotLN < 0.0) {
-                // Light not visible from this point on the surface
                 return vec3(0.0, 0.0, 0.0);
             }
 
             if (dotRV < 0.0) {
-                // Light reflection in opposite direction as viewer, apply only diffuse
-                // component
-                return lightIntensity * (k_d * dotLN);
+                return light_intensity * (k_d * dotLN);
             }
-            return lightIntensity * (k_d * dotLN + k_s * pow(dotRV, alpha));
+            return light_intensity * (k_d * dotLN + k_s * pow(dotRV, alpha));
         }
 
 
-        float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax ) {
+        float softshadow(vec3 eye, vec3 dir, float mint, float tmax ) {
             float res = 1.0;
             float t = mint;
-            for( int i=0; i<16; i++ )
-            {
-                float h = scene( ro + rd*t );
-                res = min( res, 8.0*h/t );
-                t += clamp( h, 0.02, 0.10 );
-                if( h<0.001 || t>tmax ) break;
+            for(int i = 0; i < 16; i++) {
+                float h = scene(eye + dir * t);
+                res = min(res, 8.0 * h / t);
+                t += clamp(h, 0.02, 0.10);
+                if(h < 0.001 || t > tmax) break;
             }
-            return clamp( res, 0.0, 1.0 );
+            return clamp(res, 0.0, 1.0);
         }
 
 
