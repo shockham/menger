@@ -178,12 +178,6 @@ fragmentShader =
             return end;
         }
 
-        vec3 ray_dir(float fieldOfView, vec2 size, vec2 fragCoord) {
-            vec2 xy = fragCoord - size / 2.0;
-            float z = size.y / tan(radians(fieldOfView) / 2.0);
-            return normalize(vec3(xy, -z));
-        }
-
         vec3 estimate_normal(vec3 p) {
             return normalize(vec3(
                 scene(vec3(p.x + EPSILON, p.y, p.z)) - scene(vec3(p.x - EPSILON, p.y, p.z)),
@@ -248,8 +242,8 @@ fragmentShader =
         }
 
         vec3 lighting(vec3 k_a, vec3 k_d, vec3 k_s, float alpha, vec3 p, vec3 eye) {
-            const vec3 ambientLight = vec3(0.6);
-            vec3 color = ambientLight * k_a;
+            const vec3 ambient_light = vec3(0.6);
+            vec3 color = ambient_light * k_a;
             vec3 normal = estimate_normal(p);
 
             color = mix(color, normal, ncolor);
@@ -285,16 +279,7 @@ fragmentShader =
             }
 
             vec3 p = cam_pos + dist * v_dir;
-
-            vec3 color = lighting(
-                vec3(0.2, 0.2, 0.2),
-                vec3(0.2, 0.2, 0.2),
-                vec3(1.0, 1.0, 1.0),
-                20.0,
-                p,
-                cam_pos
-            );
-
+            vec3 color = lighting(vec3(0.2), vec3(0.2), vec3(1.0), 20.0, p, cam_pos);
             return vec4(color, 1.0);
         }
 
@@ -310,6 +295,12 @@ fragmentShader =
             );
         }
 
+        vec3 ray_dir(float fieldOfView, vec2 size, vec2 fragCoord) {
+            vec2 xy = fragCoord - size / 2.0;
+            float z = size.y / tan(radians(fieldOfView) / 2.0);
+            return normalize(vec3(xy, -z));
+        }
+
         void main() {
             vec2 resolution = dimensions;
             vec3 dir = ray_dir(45.0, resolution, vposition.xy * resolution);
@@ -319,7 +310,7 @@ fragmentShader =
                 sin(mouse_pos.x / MOUSE_POS_DIV) * cos(mouse_pos.y / MOUSE_POS_DIV)
             ) * distance;
 
-            mat4 view_mat = view_matrix(cam_pos, vec3(0.0, 0.0, 0.0), vec3(0.0, 1.0, 0.0));
+            mat4 view_mat = view_matrix(cam_pos, vec3(0.0), vec3(0.0, 1.0, 0.0));
             vec3 v_dir = (view_mat * vec4(dir, 0.0)).xyz;
 
             gl_FragColor = render(cam_pos, v_dir);
