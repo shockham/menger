@@ -167,15 +167,10 @@ fragmentShader =
             float depth = start;
             for (int i = 0; i < MAX_MARCHING_STEPS; i++) {
                 float dist = scene(eye + depth * dir);
-                if (dist < EPSILON) {
-                    return depth;
-                }
+                if (dist < EPSILON || depth >=  end) break;
                 depth += dist / (1.0 + displ);
-                if (depth >= end) {
-                    return end;
-                }
             }
-            return end;
+            return depth;
         }
 
         vec3 estimate_normal(vec3 p) {
